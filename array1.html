@@ -1,0 +1,68 @@
+<html>
+<head>
+<script src="angular.min.js"> </script>
+<style>
+    table,th,td{
+        border:1px solid greenyellow;
+        border-collapse: :collapse;
+        padding:5px;
+    }
+    table tr:nth-child(odd) {
+            background-color: #f2f2f2;
+         }
+         
+         table tr:nth-child(even) {
+            background-color: #ffffff;
+         }
+</style>
+</head>
+<body>
+<div ng-app="myapp" ng-controller="grocery">
+    <h3> GROCERY LIST </h3>
+    <div ng-repeat="x in 1st">
+        <h4>{x.item}</h4>
+    
+    <br>
+    <table border ="0">
+      <tr>
+         <td>enter item:</td>
+         <td>
+             <input type="text" ng-model='additem'/>
+         </td>
+      </tr>
+      <button ng-click='addTolist(addItem)'>Add to list</button>
+       <h2>{{NoItemError}}</h2>
+    </div>
+    </table>
+    <script>
+       var myapp = angular.module("myapp",[]);
+       myapp.controller('grocery',function($scope){
+        $scope.1st = [
+         <table>   
+            <tr ng-repeat="fruits">
+        <td>{item:'banana', needed:false}</td>,
+        <td>{item: 'apple', needed:false}</td>,
+        <td>{item:'milk', needed:false}</td>,
+        <td>{item: 'tomato', needed:false}</td>,
+        <td>{item:'juice', needed:false}</td>
+        </tr>
+        </table>
+    ]
+    $scope.addTolist = function(addItem){
+ if (!(addItem === undefined || addItem === '')){
+     $scope.lst.push({item: addItem, needed: false});
+     $scope.NoItemError = '';
+     } else {
+        $scope.NoItemError = 'Please enter an item';
+            }
+}
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+        

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="angular.min.js"></script>
+    <style>
+        div{
+            font:15px Verdana;
+            width:450px;
+        }
+        ul {
+            padding:0;
+            margin:2px 5px; 
+            list-style:none; 
+            border:0; 
+            float:left; 
+            width:100%;
+        }
+        li {
+            width:50%; 
+            float:left; 
+            display:inline-block; 
+        }
+        table, input {
+            text-align:left;
+            font:13px Verdana;
+        }
+        table, td, th 
+        {
+            margin:10px 0;
+            padding:2px 10px;
+        }
+        td, th {
+            border:solid 1px #CCC;
+        }
+        button {
+            font:13px Verdana;
+            padding:3px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-app="myApp" ng-controller="myController">
+        <ul>
+            <li>grocery</li>
+            <li><input type="text" ng-model="name" /></li>
+        </ul>
+        <ul>
+            <li>price</li>
+            <li><input type="text" ng-model="price" /></li>
+        </ul>
+        <ul>
+            <li></li><li><button ng-click="addRow()"> Add Row </button></li>
+        </ul>
+
+        <!--CREATE A TABLE-->
+        <table> 
+            <tr>
+                <th>Code</th>
+                    <th>grocery</th>
+                        <th>price</th>
+            </tr>
+
+            <tr ng-repeat="grocery in groceryArray">
+                <td><label>{{$index + 1}}</label></td>
+                <td><label>{{grocery.name}}</label></td>
+                <td><label>{{grocery.price}}</label></td>
+                <td><input type="checkbox" ng-model="grocery.Remove"/></td>
+            </tr>
+        </table>
+
+        <div>
+            <button ng-click="submit()">Submit Data</button>   
+                <button ng-click="removeRow()">Remove Row</button>
+        </div>
+
+        <div id="display" style="padding:10px 0;">{{display}}</div>
+    </div>
+</body>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myController', function ($scope) {
+
+        // JSON ARRAY TO POPULATE TABLE.
+        $scope.groceryArray =
+        [
+            { 'name': 'banana', 'price': '50' },
+            { 'name': 'pineapple', 'price': '80' },
+            { 'name': 'orange', 'price': '100' }
+        ];
+
+        // GET VALUES FROM INPUT BOXES AND ADD A NEW ROW TO THE TABLE.
+        $scope.addRow = function () {
+            if ($scope.name != undefined && $scope.price != undefined) {
+                var movie = [];
+                grocery.name = $scope.name;
+                grocery.price = $scope.price;
+
+                $scope.groceryArray.push(grocery);
+
+                // CLEAR TEXTBOX.
+                $scope.name = null;
+                $scope.price = null;
+            }
+        };
+
+        // REMOVE SELECTED ROW(s) FROM TABLE.
+        $scope.removeRow = function () {
+            var arrGrocery = [];
+            angular.forEach($scope.groceryArray, function (value) {
+                if (!value.Remove) {
+                    arrGrocery.push(value);
+                }
+            });
+            $scope.groceryArray = arrGrocery;
+        };
+
+        // FINALLY SUBMIT THE DATA.
+        $scope.submit = function () {
+            var arrGrocery = [];
+            angular.forEach($scope.groceryArray, function (value) {
+                arrGrocery.push('Name:' + value.name + ' price:' + value.price);
+            });
+            $scope.display = arrGrocery;
+        };
+    });
+</script>
+</html>
